@@ -27,10 +27,12 @@ namespace desafio_api_contact_book
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+            services.AddCors();
+
             services.AddDbContext<DataContext>(x => x.UseInMemoryDatabase("Database"));
             services.AddScoped<DataContext, DataContext>();
             services.AddControllers();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +42,12 @@ namespace desafio_api_contact_book
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 

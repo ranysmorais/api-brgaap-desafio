@@ -18,18 +18,12 @@ namespace desafio_api_contact_book
         public string name { get; set; }
 
         public string phone { get; set; }
-
         
         public string street { get; set; }
 
         
-        public string disctrict { get; set; }
+        public string city { get; set; }
 
         
-        public int zipCode { get; set; }
-
-       
-        public string number { get; set; }
-
     }
 }
