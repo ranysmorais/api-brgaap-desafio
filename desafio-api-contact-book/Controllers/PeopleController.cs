@@ -18,7 +18,7 @@ namespace desafio_api_contact_book.Controllers
         [Route("")]
         public async Task<ActionResult<List<People>>> Get([FromServices] DataContext context)
         {
-            var peoples = await context.peoples.ToListAsync(); 
+            var peoples = await context.peoples.ToListAsync();
             return peoples;
         }
 
@@ -35,9 +35,42 @@ namespace desafio_api_contact_book.Controllers
             else
             {
                 return BadRequest(ModelState);
-            }
-            
+            }            
         }
+        
+       
+        [HttpGet("get-contact/{phone}")]
+        public async Task<ActionResult<People>> GetByPhone(long phone, [FromServices] DataContext context )
+        {
+
+            var peoples = await context.peoples.ToListAsync();
+            return peoples.Find(x => x.phone == phone);
+
+        }
+
+        [HttpGet("get-contact/{name}")]
+        public async Task<ActionResult<People>> GetByName(string name, [FromServices] DataContext context)
+        {
+
+            var peoples = await context.peoples.ToListAsync();
+            return peoples.Find(x => x.name == name);            
+
+        }
+
+        [HttpDelete("delete-contact/{phone}")]       
+        public async void DeleteByPhone(long phone,[FromServices] DataContext context)
+        {
+
+            var p = await context.peoples.ToListAsync();           
+
+            context.peoples.Remove(p.Find(x => x.phone == phone));
+            await context.SaveChangesAsync();
+
+
+        }
+
+
+
 
     }
 
